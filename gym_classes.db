@@ -1,0 +1,30 @@
+import sqlite3
+
+# Connect to SQLite and create a new database
+conn = sqlite3.connect('gym_classes.db')
+cursor = conn.cursor()
+
+# Create the table
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS classes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    schedule TEXT,
+    price TEXT
+)
+''')
+
+# Insert sample data (you can replace this with your actual scraping data later)
+cursor.executemany('''
+INSERT INTO classes (name, schedule, price)
+VALUES (?, ?, ?)
+''', [
+    ("Yoga", "Monday", "$10"),
+    ("Zumba", "Tuesday", "$15"),
+    ("Spin Class", "Wednesday", "$12"),
+    ("Pilates", "Monday", "$20"),
+    ("Boxing", "Friday", "$18")
+])
+
+conn.commit()
+conn.close()
